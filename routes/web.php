@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Suppliercontroller;
 
 
 /*
@@ -15,6 +16,9 @@ use App\Http\Controllers\ProductController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/supplier/create', [suppliercontroller::class, 'create'])->name("supplier-create");
+Route::post('/supplier', [suppliercontroller::class, 'store'])->name("supplier-store");
 
 Route::get('/product', [ProductController::class, 'index']);
 Route::get('/product/create', [ProductController::class, 'create'])->name("product-create");
@@ -39,5 +43,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/route_cont/{id}', [Barang::class, 'index']);
+Route::resource('suppliers', SupplierController::class);
 
 require __DIR__.'/auth.php';
