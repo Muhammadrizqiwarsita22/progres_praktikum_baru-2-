@@ -13,7 +13,11 @@ class suppliercontroller extends Controller
      */
     public function index()
     {
-        //
+        // mengambil data dari database melalui model product,
+        //fungsi all() sama seperti SELECT * FROM
+
+        $data = Supplier::all();
+        return view("master-data.supplier-master.index-supplier", compact('data'));
     }
 
     /**
