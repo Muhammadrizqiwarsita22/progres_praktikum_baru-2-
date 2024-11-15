@@ -11,14 +11,24 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        // mengambil data dari database melalui model product,
-        //fungsi all() sama seperti SELECT * FROM
-
-        $data = Product::all();
-        return view("master-data.product-master.index-product", compact('data'));
+    public function index(Request $request)
+{
+    // Membuat query builder baru untuk model Product
+    $query = Product::query();
+    
+    // Cek apakah ada parameter 'search' di request
+    if ($request->has('search') && $request->search != '') {
+        // Melakukan pencarian berdasarkan nama produk atau informasi
+        $search = $request->search;
+        $query->where('product_name', 'like', '%' . $search . '%');
     }
+    
+    // Gunakan query builder untuk paginasi
+    $products = $query->paginate(2);
+    
+    return view("master-data.product-master.index-product", compact('products'));
+}
+
 
     /**
      * Show the form for creating a new resource.
@@ -62,7 +72,10 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        // Ada 2 cara menampilkan detail product
+        // pakai find atau findOrFail
+        $product = Product::findOrFail(id: $id);
+        return view("master-data.product-master.detail-product", compact('products'));
     }
 
     /**
@@ -123,4 +136,5 @@ class ProductController extends Controller
         }
         return redirect()->route('product')->with('error', 'product tidak ditemukan');
     }
+    
 }

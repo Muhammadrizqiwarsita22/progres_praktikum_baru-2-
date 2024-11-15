@@ -4,9 +4,6 @@
       {{ __('Dashboard') }}
     </h2>
   </x-slot>
-
-
- 
   <div class="container p-4 mx-auto">
     <div class="overflow-x-auto">
       <a href="{{ route('product-create')}}">
@@ -28,7 +25,6 @@
           </tr>
         </thead>
         <tbody>
-         
           @foreach ($data as $item)
             <tr class="bg-white">
                 <td class="px-4 py-2 border border-gray-200">1</td>
@@ -42,14 +38,11 @@
                 </td>
             </tr>
         @endforeach
-
-
         <!-- Tambahkan baris lainnya sesuai kebutuhan -->
             </tbody>
         </table>
     </div>
 </div>
-
 
 <script>
     function confirmDelete(id, deleteUrl) {
@@ -57,30 +50,25 @@
                 // Jika user mengonfirmasi, kita dapat membuat form dan mengirimkan permintaan delete
                 let form = document.createElement('form');
                 form.method = 'POST';
-                form.action = deleteUrl;
-   
+                form.action = deleteUrl;   
                 // Tambahkan CSRF token
                 let csrfInput = document.createElement('input');
                 csrfInput.type = 'hidden';
                 csrfInput.name = '_token';
                 csrfInput.value = '{{ csrf_token() }}';
                 form.appendChild(csrfInput);
-
                 // Tambahkan method spoofing untuk DELETE (karena HTML form hanya mendukung GET dan POST)
                 let methodInput = document.createElement('input');
                 methodInput.type = 'hidden';
                 methodInput.name = '_method';
                 methodInput.value = 'DELETE';
                 form.appendChild(methodInput);
-
                 // Tambahkan form ke body dan submit
                 document.body.appendChild(form);
                 form.submit();
             }
         }
 </script>
-
-
 
 
 </x-app-layout>
